@@ -1,4 +1,11 @@
+/* eslint-disable import/first */
 import 'reflect-metadata';
+
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: '.env',
+});
 
 import express from 'express';
 

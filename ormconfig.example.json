@@ -5,6 +5,9 @@
   "username": "USERNAME_DATABASE",
   "password": "PASSWORD_DATABASE",
   "database": "NAME_DATABASE",
+  "entities": [
+    "./src/models/*.ts"
+  ],
   "migrations": [
     "./src/database/migrations/*.ts"
   ],
