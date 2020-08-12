@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config({
   path: '.env',
@@ -17,6 +18,7 @@ import AppError from './errors/AppError';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
