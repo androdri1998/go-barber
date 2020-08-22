@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import authConfig from '../../../../config/auth';
-import AppError from '../../../errors/AppError';
+import authConfig from '@config/auth';
+import AppError from '@shared/errors/AppError';
 
 interface TokenPayload {
   iat: number;
@@ -26,6 +26,7 @@ export default function ensureAuthentication(
   try {
     const decoded = verify(token, authConfig.jwt.secret as string);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { exp, iat, sub } = decoded as TokenPayload;
 
     req.user = {
