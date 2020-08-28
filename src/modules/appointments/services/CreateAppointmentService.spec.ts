@@ -34,8 +34,8 @@ describe('CreateAppointment', () => {
 
     await createAppointment.execute(mockAppointment);
 
-    expect(createAppointment.execute(mockAppointment)).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      createAppointment.execute(mockAppointment),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
