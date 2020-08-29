@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -27,7 +27,7 @@ export default function ensureAuthentication(
     const decoded = verify(token, authConfig.jwt.secret as string);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { exp, iat, sub } = decoded as TokenPayload;
+    const { exp, iat, sub } = decoded as ITokenPayload;
 
     req.user = {
       id: sub,
