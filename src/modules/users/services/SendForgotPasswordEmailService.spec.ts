@@ -2,14 +2,14 @@ import 'reflect-metadata';
 
 import AppError from '@shared/errors/AppError';
 import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
-import SendForgotEmailPasswordService from './SendForgotEmailPasswordService';
+import SendForgotPasswordEmailService from './SendForgotPasswordEmailService';
 import FakeUsersRepository from '../reponsitories/fakes/FakeUsersRepository';
 import FakeUserTokensRepository from '../reponsitories/fakes/FakeUserTokensRepository';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
 let fakeMailProvider: FakeMailProvider;
-let sendForgotEmailPasswordService: SendForgotEmailPasswordService;
+let sendForgotPasswordEmailService: SendForgotPasswordEmailService;
 
 describe('SendForgotPasswordEmail', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('SendForgotPasswordEmail', () => {
     fakeMailProvider = new FakeMailProvider();
     fakeUserTokensRepository = new FakeUserTokensRepository();
 
-    sendForgotEmailPasswordService = new SendForgotEmailPasswordService(
+    sendForgotPasswordEmailService = new SendForgotPasswordEmailService(
       fakeUsersRepository,
       fakeMailProvider,
       fakeUserTokensRepository,
@@ -35,7 +35,7 @@ describe('SendForgotPasswordEmail', () => {
 
     await fakeUsersRepository.create(mockUser);
 
-    await sendForgotEmailPasswordService.execute({ email: mockUser.email });
+    await sendForgotPasswordEmailService.execute({ email: mockUser.email });
 
     expect(sendMail).toHaveBeenCalled();
   });
@@ -46,7 +46,7 @@ describe('SendForgotPasswordEmail', () => {
     };
 
     await expect(
-      sendForgotEmailPasswordService.execute({ email: mockUser.email }),
+      sendForgotPasswordEmailService.execute({ email: mockUser.email }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
@@ -61,7 +61,7 @@ describe('SendForgotPasswordEmail', () => {
 
     const userCreated = await fakeUsersRepository.create(mockUser);
 
-    await sendForgotEmailPasswordService.execute({ email: mockUser.email });
+    await sendForgotPasswordEmailService.execute({ email: mockUser.email });
 
     await expect(sendToken).toBeCalledWith(userCreated.id);
   });
