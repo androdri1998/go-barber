@@ -1,10 +1,6 @@
 /* eslint-disable import/first */
 import 'reflect-metadata';
-import dotenv from 'dotenv';
-
-dotenv.config({
-  path: '.env',
-});
+import 'dotenv/config';
 
 import AppError from '@shared/errors/AppError';
 import AuthenticateUserService from './AuthenticateUserService';

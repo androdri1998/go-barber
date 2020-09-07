@@ -1,12 +1,9 @@
 /* eslint-disable import/first */
 import 'reflect-metadata';
+import 'dotenv/config';
 
-import dotenv from 'dotenv';
+import { errors } from 'celebrate';
 import cors from 'cors';
-
-dotenv.config({
-  path: '.env',
-});
 
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
@@ -24,6 +21,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
+
+app.use(errors());
 
 app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
   if (err instanceof AppError) {
