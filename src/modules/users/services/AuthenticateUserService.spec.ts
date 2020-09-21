@@ -4,14 +4,12 @@ import 'dotenv/config';
 
 import AppError from '@shared/errors/AppError';
 import AuthenticateUserService from './AuthenticateUserService';
-import CreateUserService from './CreateUserService';
 import FakeUsersRepository from '../reponsitories/fakes/FakeUsersRepository';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let authenticateUser: AuthenticateUserService;
-let createUser: CreateUserService;
 
 describe('AuthenticateUser', () => {
   beforeEach(() => {
@@ -21,7 +19,6 @@ describe('AuthenticateUser', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
-    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
   });
 
   it('should be able to authenticate', async () => {
@@ -31,7 +28,7 @@ describe('AuthenticateUser', () => {
       password: '12345',
     };
 
-    const createdUser = await createUser.execute(mockUser);
+    const createdUser = await fakeUsersRepository.create(mockUser);
     const response = await authenticateUser.execute({
       email: mockUser.email,
       password: mockUser.password,
@@ -62,7 +59,7 @@ describe('AuthenticateUser', () => {
       password: '12345',
     };
 
-    await createUser.execute(mockUser);
+    await fakeUsersRepository.create(mockUser);
 
     await expect(
       authenticateUser.execute({
