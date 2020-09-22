@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { inject, injectable } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import Appointment from '../infra/typeorm/entities/Appointment';
@@ -38,7 +39,10 @@ export default class ListProviderAppointmentsService {
         { provider_id, month, year, day },
       );
 
-      await this.cacheProviderProvider.save(cacheKey, appointments);
+      await this.cacheProviderProvider.save(
+        cacheKey,
+        classToClass(appointments),
+      );
     }
 
     return appointments;
