@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { inject, injectable } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
@@ -30,7 +31,10 @@ export default class ListProvidersService {
         exceptUserId: user_id,
       });
 
-      await this.cacheProviderProvider.save(`providers-list:${user_id}`, users);
+      await this.cacheProviderProvider.save(
+        `providers-list:${user_id}`,
+        classToClass(users),
+      );
     }
 
     return users;

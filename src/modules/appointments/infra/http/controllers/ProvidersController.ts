@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import ListProvidersService from '@modules/appointments/services/ListProvidersService';
 
@@ -14,6 +15,6 @@ export default class ProvidersController {
       user_id: userId,
     });
 
-    return res.json(providers);
+    return res.json(classToClass(providers));
   }
 }
